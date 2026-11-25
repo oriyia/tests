@@ -11,7 +11,8 @@
 - завершается сама — режим наблюдения (watch) не годится — и при падении возвращает ненулевой код;
 - ничего не спрашивает у человека.
 
-Проверить, что новый тест выполнен, — найти его имя в выводе команды.
+Список собранных тестов показывает, какие тесты раннер нашёл. Чтобы проверить, выполнился ли
+конкретный тест, найди его имя и итог в подробном выводе запуска или отчёте раннера.
 
 ## python
 
@@ -23,14 +24,15 @@
 
 **Как находит раннер.** `test_*.py` и `*_test.py`, классы `Test*` без `__init__`, функции
 `test_*`; поиск сужают `testpaths`, `norecursedirs` в настройках и `--ignore` в команде.
-Убедиться — `python3 -m pytest --collect-only -q`.
+Список найденных тестов — `python3 -m pytest --collect-only -q`.
 
-**Команда.** `python3 -m pytest -q tests` или `python3 -m unittest discover tests`.
+**Команда.** `python3 -m pytest -q tests` или `python3 -m unittest discover -v tests`.
+Флаг `-v` у `unittest` показывает имена тестов и причины пропуска.
 
 **Пропуск без окружения.** Условие — проверка, что окружение есть, причина — что нужно:
 `@pytest.mark.skipif(not has_gpu(), reason="нужно GPU NVIDIA с 16 ГБ памяти")` или
-`@unittest.skipUnless(has_gpu(), "нужно GPU NVIDIA с 16 ГБ памяти")`. В выводе тест — пропущен с
-этой причиной.
+`@unittest.skipUnless(has_gpu(), "нужно GPU NVIDIA с 16 ГБ памяти")`. Причину пропуска ищи
+в подробном выводе раннера или отчёте.
 
 **Как выглядит пропуск и ослабление.** `@unittest.skip`, `skipIf`, `skipUnless`,
 `expectedFailure`, `self.skipTest()`; `pytest.mark.skip`, `skipif`, `xfail`, `pytest.skip()`;
